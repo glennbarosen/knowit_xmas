@@ -1,36 +1,38 @@
+# basic prime finder from GeeksforGeeks
 def isPrime(n):
     if n <= 1:
         return False
     if n <= 3:
         return True
-
     if n % 2 == 0 or n % 3 == 0:
         return False
-
     i = 5
     while i * i <= n:
         if n % i == 0 or n % (i + 2) == 0:
             return False
         i = i + 6
-
     return True
 
 
-N = 5433000 - 1
+def findClosestPrime(n):
+    while not isPrime(n):
+        n -= 1
+    return n
+
+
+N = 5433000
 gifts = 0
-primes = []
+currentPrime = 0
+i = 0
+deliveredGifts = []
 
-for i in range(0, 19):
-    if (isPrime(i) == True):
-        primes.append(i)
+while i < N:
     if "7" in str(i):
-        if isPrime(i):
-            gifts -= i + 1
-        else:
-            gifts -= primes[len(primes) - 1]
+        i += findClosestPrime(i)
     else:
-        gifts = gifts + 1
+        gifts += 1
+        deliveredGifts.append(i)
+    i += 1
 
-    print(i, gifts)
-print(primes)
-print(isPrime(27))
+# print(deliveredGifts)
+print("delivered gifts:", gifts)
